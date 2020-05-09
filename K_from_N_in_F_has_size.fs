@@ -13,12 +13,6 @@ let sample (count:int) (xs:'a list) (rng: System.Random): (list<'a>*System.Rando
     shuffle rng xs
     |> fun (shuffled, rng') -> List.take (count) shuffled, rng'
     |> IO
-    
-//logic
-let isHypothesisRight (size:int) (k:int Set) (m: int Set): bool =
-    Set.intersect k m
-    |> Set.count
-    |> fun x -> x > size
 //logic
 let isHypothesisRight (size:int) (k:int Set, m: int Set): bool =
     Set.intersect k m
