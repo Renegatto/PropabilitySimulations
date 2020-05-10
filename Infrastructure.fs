@@ -1,5 +1,9 @@
 module Infrastructure
 let flip f x y = f y x
+module lambda =
+    let k x y = x
+    let ks x y = y
+    let s x y z = x z (y z)
 type IO<'a> = IO of 'a with
 
     //this kind of IO can join to Async to avoid complicated code

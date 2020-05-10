@@ -17,7 +17,7 @@ let sample (count:int) (xs:'a list) (rng: System.Random): (list<'a>*System.Rando
 let isHypothesisRight (size:int) (k:int Set, m: int Set): bool =
     Set.intersect k m
     |> Set.count
-    |> fun x -> x > size
+    |> fun x -> x >= size
 
 let prepareData (n_length: int) (k_length: int) (m_length: int) ()
     : (Set<int>*Set<int>) IO =
@@ -34,8 +34,9 @@ let prepareData (n_length: int) (k_length: int) (m_length: int) ()
 
     IO.map2 (fun x y -> x,y) k m
 //usage
-let simul_K_from_N_in_M_from_N_has_size (): unit IO =
-    (IO.map (isHypothesisRight 3) << prepareData 20 5 7)
-    |> simulate 200000
+let simul_K_from_N_in_M_from_N_has_size (size:int) (): unit IO =
+    let times = 5_000_000 
+    (IO.map (isHypothesisRight size) << prepareData 20 5 7)
+    |> simulate times
     |> IO.map (fun (successes, propability) -> 
-        printfn "Simulation, successes/all = %A/%A, P(x) = %A" successes 200000 propability)
+        printfn "Simulation, successes/all = %A/%A, P(x) = %A" successes times propability)
